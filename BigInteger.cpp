@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-#include <math.h>
+#include <cmath>
 #include "BigInteger.h"
 #define MAX 10000 // for strings
 
