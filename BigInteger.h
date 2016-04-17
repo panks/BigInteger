@@ -18,6 +18,7 @@ public:
 	void setSign(bool s);
 	const bool& getSign();
 	BigInteger absolute(); // returns the absolute value
+	BigInteger pow(int n); // returns a^n
 	void operator = (BigInteger b);
 	bool operator == (BigInteger b);
 	bool operator != (BigInteger b);
