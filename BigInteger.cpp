@@ -80,6 +80,21 @@ BigInteger BigInteger::absolute()
 	return BigInteger( getNumber() ); // +ve by default
 }
 //-------------------------------------------------------------
+// returns a^n
+BigInteger BigInteger::pow(int n)
+{
+
+    BigInteger a = (*this), p("1");
+        while (n > 0) {
+            if ((n & 1) != 0)
+                p *= a;
+            a *= a;
+            n >>= 1;
+        }
+
+        return p;
+}
+//-------------------------------------------------------------
 void BigInteger::operator = (BigInteger b)
 {
 	setNumber( b.getNumber() );
