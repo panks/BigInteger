@@ -59,7 +59,7 @@ void BigInteger::setNumber(string s)
 	number = s;
 }
 //-------------------------------------------------------------
-const string& BigInteger::getNumber() // retrieves the number
+const string& BigInteger::getNumber() const // retrieves the number
 {
 	return number;
 }
@@ -69,13 +69,13 @@ void BigInteger::setSign(bool s)
 	sign = s;
 }
 //-------------------------------------------------------------
-const bool& BigInteger::getSign()
+const bool& BigInteger::getSign() const
 {
 	return sign;
 }
 //-------------------------------------------------------------
 // returns the absolute value
-BigInteger BigInteger::absolute()
+BigInteger BigInteger::absolute() const
 {
 	return BigInteger( getNumber() ); // +ve by default
 }
@@ -153,7 +153,7 @@ BigInteger BigInteger::operator --(int) // postfix
 	return before;
 }
 //-------------------------------------------------------------
-BigInteger BigInteger::operator + (BigInteger b)
+BigInteger BigInteger::operator + (BigInteger b) const
 {
 	BigInteger addition;
 	if( getSign() == b.getSign() ) // both +ve or -ve
@@ -180,13 +180,13 @@ BigInteger BigInteger::operator + (BigInteger b)
 	return addition;
 }
 //-------------------------------------------------------------
-BigInteger BigInteger::operator - (BigInteger b)
+BigInteger BigInteger::operator - (BigInteger b) const
 {
 	b.setSign( ! b.getSign() ); // x - y = x + (-y)
 	return (*this) + b;
 }
 //-------------------------------------------------------------
-BigInteger BigInteger::operator * (BigInteger b)
+BigInteger BigInteger::operator * (BigInteger b) const
 {
 	BigInteger mul;
 
@@ -200,7 +200,7 @@ BigInteger BigInteger::operator * (BigInteger b)
 }
 //-------------------------------------------------------------
 // Warning: Denomerator must be within "long long" size not "BigInteger"
-BigInteger BigInteger::operator / (BigInteger b)
+BigInteger BigInteger::operator / (BigInteger b) const
 {
 	long long den = toInt( b.getNumber() );
 	BigInteger div;
@@ -215,7 +215,7 @@ BigInteger BigInteger::operator / (BigInteger b)
 }
 //-------------------------------------------------------------
 // Warning: Denomerator must be within "long long" size not "BigInteger"
-BigInteger BigInteger::operator % (BigInteger b)
+BigInteger BigInteger::operator % (BigInteger b) const
 {
 	long long den = toInt( b.getNumber() );
 
@@ -268,6 +268,23 @@ BigInteger& BigInteger::operator [] (int n)
 BigInteger BigInteger::operator -() // unary minus sign
 {
 	return (*this) * -1;
+}
+//-------------------------------------------------------------
+BigInteger BigInteger::pow(BigInteger n) const
+{
+	BigInteger result(1);
+	BigInteger bigA(*this);
+	while (n != 0)
+	{
+		if (n % 2 != 0)
+		{
+			result = result * bigA;
+			n--;
+		}
+		bigA = bigA * bigA;
+		n/=2;
+	}
+	return result;
 }
 //-------------------------------------------------------------
 BigInteger::operator string() // for conversion from BigInteger to string
@@ -435,7 +452,7 @@ pair<string, long long> BigInteger::divide(string n, long long den)
 	long long rem = 0;
 	string result; result.resize(MAX);
 	
-	for(int indx=0, len = n.length(); indx<len; ++indx)
+	for(unsigned long indx=0, len = n.length(); indx<len; ++indx)
 	{
 		rem = (rem * 10) + (n[indx] - '0');
 		result[indx] = rem / den + '0';
@@ -454,7 +471,7 @@ pair<string, long long> BigInteger::divide(string n, long long den)
 
 //-------------------------------------------------------------
 // converts long long to string
-string BigInteger::toString(long long n)
+string BigInteger::toString(long long n) const
 {
 	stringstream ss;
 	string temp;
@@ -467,11 +484,11 @@ string BigInteger::toString(long long n)
 
 //-------------------------------------------------------------
 // converts string to long long
-long long BigInteger::toInt(string s)
+long long BigInteger::toInt(string s) const
 {
 	long long sum = 0;
 
-	for(int i=0; i<s.length(); i++)
+	for(size_t i=0; i<s.length(); i++)
 		sum = (sum*10) + (s[i] - '0');
 
 	return sum;
