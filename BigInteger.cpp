@@ -350,7 +350,7 @@ string BigInteger::add(string number1, string number2)
 	else// if(number1.size() < number2.size())
 		number1.insert(0, differenceInLength, '0');
 
-	for(int i=number1.size()-1; i>=0; --i)
+	for(long i= long(number1.size()) - 1; i>=0; --i)
 	{
 		add[i] = ((carry-'0')+(number1[i]-'0')+(number2[i]-'0')) + '0';
 
@@ -386,7 +386,7 @@ string BigInteger::subtract(string number1, string number2)
 	else
 		number1.insert(0, differenceInLength, '0');
 
-	for(int i=number1.length()-1; i>=0; --i)
+	for(long i = long(number1.length()) - 1; i>=0; --i)
 	{
 		if(number1[i] < number2[i])
 		{
@@ -410,13 +410,13 @@ string BigInteger::multiply(string n1, string n2)
 		n1.swap(n2);
 
 	string res = "0";
-	for(int i=n1.length()-1; i>=0; --i)
+	for(long i = long(n1.length()) - 1; i>=0; --i)
 	{
 		string temp = n2;
 		int currentDigit = n1[i]-'0';
 		int carry = 0;
 
-		for(int j=temp.length()-1; j>=0; --j)
+		for(long j = long(temp.length()) - 1; j>=0; --j)
 		{
 			temp[j] = ((temp[j]-'0') * currentDigit) + carry;
 
@@ -432,7 +432,7 @@ string BigInteger::multiply(string n1, string n2)
 		}
 
 		if(carry > 0)
-			temp.insert(0, 1, (carry+'0'));
+			temp.insert(0, 1, char(carry+'0'));
 		
 		temp.append((n1.length()-i-1), '0'); // as like mult by 10, 100, 1000, 10000 and so on
 
